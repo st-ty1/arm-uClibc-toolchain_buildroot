@@ -14,10 +14,10 @@ HowTo: Rebuild arm-toolchain (gcc 4.5.3 + uClibc 0.9.3X.X) for FreshTomato with 
 	 buildroot-2012.02/support/scripts/apply-patches.sh
 
 3.) Rename buildroot-2012.02/defconfig-arm-uclibc to .config.
-    Additionally, in this .config file rename the path in BR2_STAGING_DIR= in a path you have write permission to.
+    Additionally in this .config file, change directory of BR2_STAGING_DIR= to a directory you have write permission to (default: "$(HOST_DIR)/usr").
     
 4.) In buildroot-2012.02/toolchain/uClibc/uClibc-0.9.32.config change "#UCLIBC_SUPPORT_AI_ADDRCONFIG is not set" 
-    to UCLIBC_SUPPORT_AI_ADDRCONFIG=y" 
+    to "UCLIBC_SUPPORT_AI_ADDRCONFIG=y" 
 
 5.) In directory buildroot-2012.02/dl-save 
 
@@ -33,14 +33,14 @@ HowTo: Rebuild arm-toolchain (gcc 4.5.3 + uClibc 0.9.3X.X) for FreshTomato with 
 8.) Copy 900-gcc46-texi.patch, 901_gcc_missing.patch and 902_cfns_fix mismatch in gnu_inline attributes.patch to 
    buildroot-2012.02/toolchain/gcc/4.5.3 
    
-9.) Replace buildroot-2012.02/toolchain/gcc/gcc-uclibc.mk by gcc-uclibc.mk of this repo. (Makefile=missing is added to all 3 build-stages of gcc-4.5.3) 
+9.) Replace buildroot-2012.02/toolchain/gcc/gcc-uclibc-4.x.mk by gcc-uclibc-4.x.mk of this repo (Makefile=missing is added to all 3 build-stages of gcc-4.5.3). 
 
 10.) Add uClibc-0.9.32.1-gen_wctype.patch to buildroot-2012.02/toolchain/uClibc  ("wchar-error")
    If you use uclibc-0.33-versions replace "32" by "33" in filename of these two aptches
    
 11.) Delete buildroot-2012.02/fs/skeleton/var/cache
 
-An older gcc-compiler for building prcess of toolchain doesn't seem to be necessary. Toolchain can be built with gcc-10.1.0 (on Artix/Arch-Linux). After build process is finished, toolchain is located under buildroot-2012.02/output/host/usr.
+Any older gcc-compiler is needed for building process of toolchain. E.g., toolchain can be built with gcc-10.1.0 (on Artix/Arch-Linux). After building process is finished, toolchain is located under BR2_STAGING_DIR (if you have chosen default configuartion in .config file, this means buildroot-2012.02/output/host/usr).
 
 In order to use this toolchain as toolchain for FT:
 
